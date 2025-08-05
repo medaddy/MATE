@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelBuddy | Find Your Perfect Travel Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .travel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-container {
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .chat-bubble {
+            border-radius: 20px;
+            max-width: 70%;
+        }
+        
+        .profile-pic {
+            transition: all 0.3s ease;
+        }
+        
+        .profile-pic:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #4f46e5;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-route text-indigo-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-indigo-600">TravelBuddy</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="#" class="nav-link text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium">Home</a>
+                        <a href="#how-it-works" class="nav-link text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">How It Works</a>
+                        <a href="#destinations" class="nav-link text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">Destinations</a>
+                        <a href="#testimonials" class="nav-link text-gray-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 text-sm font-medium">Testimonials</a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <button class="text-gray-500 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Log In</button>
+                    <button class="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition duration-300">Sign Up</button>
+                </div>
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg">
+        <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+                    <span class="block">Find Your Perfect</span>
+                    <span class="block text-indigo-600">Travel Companion</span>
+                </h1>
+                <p class="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                    Connect with like-minded travelers, share amazing experiences, and make lifelong friendships on your journeys.
+                </p>
+                <div class="mt-10 max-w-md mx-auto sm:flex sm:justify-center md:mt-16">
+                    <div class="rounded-md shadow w-full">
+                        <div class="bg-white p-4 rounded-lg shadow-lg">
+                            <div class="flex">
+                                <div class="flex-1 mr-2">
+                                    <label for="destination" class="block text-sm font-medium text-gray-700 mb-1">Destination</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                        </div>
+                                        <input type="text" id="destination" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Where are you going?">
+                                    </div>
+                                </div>
+                                <div class="flex-1 ml-2">
+                                    <label for="dates" class="block text-sm font-medium text-gray-700 mb-1">Dates</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-calendar-alt text-gray-400"></i>
+                                        </div>
+                                        <input type="text" id="dates" class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Select dates">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Find Travel Buddies
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div id="how-it-works" class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">How It Works</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Find a travel buddy in 3 easy steps
+                </p>
+            </div>
+
+            <div class="mt-10">
+                <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                            <i class="fas fa-user-plus text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-gray-900">1. Create Your Profile</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Tell us about yourself, your travel style, and what kind of companions you're looking for.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                            <i class="fas fa-plane text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-gray-900">2. Share Your Trip</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Add your upcoming trips with dates, destinations, and activities you're interested in.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center text-center">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                            <i class="fas fa-comments text-xl"></i>
+                        </div>
+                        <div class="mt-5">
+                            <h3 class="text-lg font-medium text-gray-900">3. Connect & Travel</h3>
+                            <p class="mt-2 text-base text-gray-500">
+                                Message potential travel buddies, plan together, and enjoy your adventure!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popular Destinations -->
+    <div id="destinations" class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Popular Destinations</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Where travelers are going
+                </p>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Destination Card 1 -->
+                <div class="travel-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Bali, Indonesia">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Bali, Indonesia</h3>
+                            <p class="text-sm">32 travelers going</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-alt mr-1"></i>
+                            <span>Most popular: June - August</span>
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Beaches</span>
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Yoga</span>
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Adventure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination Card 2 -->
+                <div class="travel-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1498307833015-e7b400441eb8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Kyoto, Japan">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Kyoto, Japan</h3>
+                            <p class="text-sm">28 travelers going</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-alt mr-1"></i>
+                            <span>Most popular: March - April</span>
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Culture</span>
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Temples</span>
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Food</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Destination Card 3 -->
+                <div class="travel-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative h-48 overflow-hidden">
+                        <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Paris, France">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-xl font-bold">Paris, France</h3>
+                            <p class="text-sm">45 travelers going</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center text-sm text-gray-500">
+                            <i class="fas fa-calendar-alt mr-1"></i>
+                            <span>Most popular: May - September</span>
+                        </div>
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Romantic</span>
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Art</span>
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">History</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 text-center">
+                <button class="px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300">
+                    View All Destinations
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Travel Buddies -->
+    <div class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Featured Travel Buddies</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Connect with these amazing travelers
+                </p>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <!-- Profile 1 -->
+                <div class="travel-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative">
+                        <img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Sarah">
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+                                Online
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center">
+                            <div class="profile-pic">
+                                <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Sarah">
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-medium text-gray-900">Sarah</h3>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-map-marker-alt mr-1 text-xs"></i>
+                                    <span>From Canada</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-sm text-gray-500 line-clamp-2">
+                                Solo female traveler looking for adventure buddies in Southeast Asia. Love hiking, photography, and trying local foods.
+                            </p>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="ml-1 text-gray-600 text-sm">4.7</span>
+                            </div>
+                            <button class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm hover:bg-indigo-200 transition duration-300">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile 2 -->
+                <div class="travel-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative">
+                        <img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Alex">
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full flex items-center">
+                                <span class="w-2 h-2 bg-gray-500 rounded-full mr-1"></span>
+                                Offline
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center">
+                            <div class="profile-pic">
+                                <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Alex">
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-medium text-gray-900">Alex</h3>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-map-marker-alt mr-1 text-xs"></i>
+                                    <span>From Australia</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-sm text-gray-500 line-clamp-2">
+                                Digital nomad looking for travel buddies in Europe. Interested in co-working spaces, local music scenes, and weekend trips.
+                            </p>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="ml-1 text-gray-600 text-sm">4.2</span>
+                            </div>
+                            <button class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm hover:bg-indigo-200 transition duration-300">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile 3 -->
+                <div class="travel-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative">
+                        <img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="James">
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+                                Online
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center">
+                            <div class="profile-pic">
+                                <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="James">
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-medium text-gray-900">James</h3>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-map-marker-alt mr-1 text-xs"></i>
+                                    <span>From UK</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-sm text-gray-500 line-clamp-2">
+                                Backpacker looking for travel companions in South America. Love hiking, photography, and learning about local cultures.
+                            </p>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-600 text-sm">5.0</span>
+                            </div>
+                            <button class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm hover:bg-indigo-200 transition duration-300">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile 4 -->
+                <div class="travel-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
+                    <div class="relative">
+                        <img class="w-full h-48 object-cover" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Maria">
+                        <div class="absolute top-4 right-4">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded-full flex items-center">
+                                <span class="w-2 h-2 bg-gray-500 rounded-full mr-1"></span>
+                                Offline
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center">
+                            <div class="profile-pic">
+                                <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Maria">
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-lg font-medium text-gray-900">Maria</h3>
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-map-marker-alt mr-1 text-xs"></i>
+                                    <span>From Spain</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-sm text-gray-500 line-clamp-2">
+                                Solo female traveler looking for companions in Asia. Interested in yoga retreats, local cuisine, and cultural experiences.
+                            </p>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-600 text-sm">4.9</span>
+                            </div>
+                            <button class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm hover:bg-indigo-200 transition duration-300">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div id="testimonials" class="py-12 bg-indigo-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Testimonials</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    What our travelers say
+                </p>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center">
+                        <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Emma">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">Emma</h3>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-600">
+                            "I found the perfect travel buddy for my trip to Thailand through TravelBuddy. We had an amazing time exploring together and have already planned our next adventure!"
+                        </p>
+                    </div>
+                    <div class="mt-4 flex items-center text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>
+                        <span>Traveled to Bangkok, Thailand</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center">
+                        <img class="h-12 w-12 rounded-full object-cover" src="https://images.unsplash.com/photo-1542103749-8ef59b94f47e?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="David">
+                        <div class="ml-4">
+                            <h3 class="text-lg font-medium text-gray-900">David</h3>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-600">
+                            "As a solo traveler, I was nervous about going to Peru alone. TravelBuddy connected me with two awesome people who became great friends. The verification system made me feel safe too."
+                        </p>
+                    </div>
+                    <div class="mt-4 flex items-center text-sm text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>
+                        <span>Traveled to Machu Picchu, Peru</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trip Planner Preview -->
+    <div class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Plan Your Trip</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Share your travel plans
+                </p>
+            </div>
+
+            <div class="mt-10 bg-gray-50 rounded-xl p-6 shadow-inner">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Add your trip details</h3>
+                        <form>
+                            <div class="mb-4">
+                                <label for="trip-destination" class="block text-sm font-medium text-gray-700 mb-1">Destination</label>
+                                <input type="text" id="trip-destination" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Where are you going?">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label for="start-date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                    <input type="date" id="start-date" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label for="end-date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                    <input type="date" id="end-date" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="trip-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <textarea id="trip-description" rows="3" class="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Tell potential travel buddies about your plans..."></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Interests</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                        <span class="ml-2 text-sm text-gray-700">Adventure</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                        <span class="ml-2 text-sm text-gray-700">Beach</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                        <span class="ml-2 text-sm text-gray-700">Culture</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                        <span class="ml-2 text-sm text-gray-700">Food</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                        <span class="ml-2 text-sm text-gray-700">Hiking</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                        <span class="ml-2 text-sm text-gray-700">Photography</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+                                Share My Trip
+                            </button>
+                        </form>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Your Trip Preview</h3>
+                        <div class="bg-white p-4 rounded-lg shadow-md">
+                            <div class="flex items-center mb-4">
+                                <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Your profile">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">You</p>
+                                    <p class="text-xs text-gray-500">Planning a trip</p>
+                                </div>
+                            </div>
+                            <div class="map-container bg-gray-200 mb-4">
+                                <!-- Map placeholder -->
+                                <div class="h-full w-full flex items-center justify-center text-gray-400">
+                                    <i class="fas fa-map-marked-alt text-4xl"></i>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h4 class="font-medium text-gray-900">Bali, Indonesia</h4>
+                                <p class="text-sm text-gray-500 flex items-center">
+                                    <i class="fas fa-calendar-alt mr-1"></i>
+                                    <span>Jun 15 - Jun 30, 2023</span>
+                                </p>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">
+                                Looking for travel buddies to explore Bali together! Interested in surfing, yoga retreats, and visiting temples. Open to splitting accommodation costs.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Beach</span>
+                                <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Yoga</span>
+                                <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">Adventure</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm text-gray-500">
+                                <span>0 connections yet</span>
+                                <button class="text-indigo-600 hover:text-indigo-800">View trip</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messaging Preview -->
+    <div class="py-12 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Secure Messaging</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Connect with potential travel buddies
+                </p>
+                <p class="mt-3 max-w-2xl mx-auto text-lg text-gray-500">
+                    Our private messaging system lets you chat safely before meeting in person.
+                </p>
+            </div>
+
+            <div class="mt-10 bg-white rounded-xl shadow-md overflow-hidden max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3">
+                    <!-- Chat list -->
+                    <div class="border-r border-gray-200">
+                        <div class="p-4 border-b border-gray-200 bg-gray-50">
+                            <h3 class="text-lg font-medium text-gray-900">Messages</h3>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            <!-- Chat 1 -->
+                            <div class="p-4 hover:bg-gray-50 cursor-pointer flex items-center">
+                                <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Sarah">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">Sarah</p>
+                                    <p class="text-xs text-gray-500 truncate">Hey! I'm also going to Bali in June. Would love to connect!</p>
+                                </div>
+                                <div class="ml-auto text-xs text-gray-500">2h ago</div>
+                            </div>
+                            <!-- Chat 2 -->
+                            <div class="p-4 hover:bg-gray-50 cursor-pointer flex items-center bg-indigo-50">
+                                <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Alex">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">Alex</p>
+                                    <p class="text-xs text-gray-500 truncate">I've been to Bali before. Can give you some tips!</p>
+                                </div>
+                                <div class="ml-auto text-xs text-gray-500">1d ago</div>
+                            </div>
+                            <!-- Chat 3 -->
+                            <div class="p-4 hover:bg-gray-50 cursor-pointer flex items-center">
+                                <img class="h-10 w-10 rounded-full object-cover" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="James">
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-900">James</p>
+                                    <p class="text-xs text-gray-500 truncate">When exactly are you going to be in Ubud?</p>
+                                </div>
+                                <div class="ml-auto text-xs text-gray-500">3d ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Chat window -->
+                    <div class="md:col-span-2">
+                        <div class="p-4 border-b border-gray-200 bg-gray-50 flex items-center">
+                            <img class="h-8 w-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Alex">
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Alex</p>
+                                <p class="text-xs text-gray-500 flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+                                    Online
+                                </p>
+                            </div>
+                            <div class="ml-auto flex space-x-2">
+                                <button class="p-1 rounded-full hover:bg-gray-200">
+                                    <i class="fas fa-phone text-gray-500"></i>
+                                </button>
+                                <button class="p-1 rounded-full hover:bg-gray-200">
+                                    <i class="fas fa-video text-gray-500"></i>
+                                </button>
+                                <button class="p-1 rounded-full hover:bg-gray-200">
+                                    <i class="fas fa-ellipsis-v text-gray-500"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4 h-96 overflow-y-auto">
+                            <!-- Message 1 -->
+                            <div class="flex mb-4">
+                                <img class="h-8 w-8 rounded-full object-cover mr-2" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Alex">
+                                <div>
+                                    <div class="bg-gray-100 chat-bubble px-4 py-2">
+                                        <p class="text-sm text-gray-800">Hey there! I saw your trip to Bali and I've been there before. Would love to share some tips!</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">Yesterday, 2:45 PM</p>
+                                </div>
+                            </div>
+                            <!-- Message 2 -->
+                            <div class="flex mb-4 justify-end">
+                                <div>
+                                    <div class="bg-indigo-100 chat-bubble px-4 py-2">
+                                        <p class="text-sm text-gray-800">Hi Alex! That would be amazing. I'm particularly interested in surfing spots and good vegetarian food.</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1 text-right">Yesterday, 3:12 PM</p>
+                                </div>
+                            </div>
+                            <!-- Message 3 -->
+                            <div class="flex mb-4">
+                                <img class="h-8 w-8 rounded-full object-cover mr-2" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=60" alt="Alex">
+                                <div>
+                                    <div class="bg-gray-100 chat-bubble px-4 py-2">
+                                        <p class="text-sm text-gray-800">For surfing, I recommend Batu Bolong beach in Canggu for beginners. As for vegetarian food, you have to try Zest in Ubud - amazing vegan dishes with a view!</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">Today, 10:30 AM</p>
+                                </div>
+                            </div>
+                            <!-- Message 4 -->
+                            <div class="flex mb-4 justify-end">
+                                <div>
+                                    <div class="bg-indigo-100 chat-bubble px-4 py-2">
+                                        <p class="text-sm text-gray-800">Thanks for the recommendations! Would you be interested in meeting up when I'm there? I'll be in Canggu from June 18-22.</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1 text-right">Today, 10:45 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-gray-200">
+                            <div class="flex items-center">
+                                <button class="p-2 rounded-full hover:bg-gray-100 mr-2">
+                                    <i class="fas fa-paperclip text-gray-500"></i>
+                                </button>
+                                <input type="text" class="flex-1 border border-gray-300 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="Type a message...">
+                                <button class="ml-2 p-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Safety Tips -->
+    <div class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Safety First</h2>
+                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Travel safely with these tips
+                </p>
+            </div>
+
+            <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Tip 1 -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3 class="mt-3 text-lg font-medium text-gray-900">Verify Profiles</h3>
+                    <p class="mt-2 text-base text-gray-500">
+                        Check verified badges and read reviews from other travelers before connecting with someone new.
+                    </p>
+                </div>
+
+                <!-- Tip 2 -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="mt-3 text-lg font-medium text-gray-900">Chat First</h3>
+                    <p class="mt-2 text-base text-gray-500">
+                        Use our secure messaging system to get to know potential travel buddies before meeting in person.
+                    </p>
+                </div>
+
+                <!-- Tip 3 -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="mt-3 text-lg font-medium text-gray-900">Meet in Public</h3>
+                    <p class="mt-2 text-base text-gray-500">
+                        Always arrange to meet in a public place first when meeting a new travel companion.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="bg-indigo-700">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                    <span class="block">Ready to find your perfect travel buddy?</span>
+                </h2>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-indigo-100">
+                    Join thousands of travelers sharing amazing experiences together.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <div class="inline-flex rounded-md shadow">
+                        <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition duration-300">
+                            Sign Up for Free
+                        </a>
+                    </div>
+                    <div class="ml-3 inline-flex">
+                        <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-800 hover:bg-indigo-600 transition duration-300">
+                            How It Works
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Company</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">About</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Blog</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Press</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Resources</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Travel Guides</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Safety Tips</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Community</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Help Center</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Legal</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Privacy</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Terms</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Cookie Policy</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Guidelines</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase">Connect</h3>
+                    <ul class="mt-4 space-y-4">
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Facebook</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Instagram</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">Twitter</a></li>
+                        <li><a href="#" class="text-base text-gray-400 hover:text-white">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between">
+                <div class="flex space-x-6 md:order-2">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <span class="sr-only">Facebook</span>
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <span class="sr-only">Instagram</span>
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <span class="sr-only">Twitter</span>
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <span class="sr-only">YouTube</span>
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
+                    &copy; 2023 TravelBuddy. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+            const mobileMenu = document.createElement('div');
+            mobileMenu.id = 'mobile-menu';
+            mobileMenu.className = 'sm:hidden hidden';
+            mobileMenu.innerHTML = `
+                <div class="pt-2 pb-3 space-y-1">
+                    <a href="#" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Home</a>
+                    <a href="#how-it-works" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">How It Works</a>
+                    <a href="#destinations" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Destinations</a>
+                    <a href="#testimonials" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">Testimonials</a>
+                </div>
+                <div class="pt-4 pb-3 border-t border-gray-200">
+                    <div class="flex items-center px-4">
+                        <button class="ml-auto bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition duration-300">Sign Up</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(mobileMenu);
+            
+            mobileMenuButton.addEventListener('click', function() {
+                const expanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !expanded);
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Date picker for the hero section
+            const dateInput = document.getElementById('dates');
+            if (dateInput) {
+                dateInput.addEventListener('focus', function() {
+                    this.type = 'date';
+                });
+                
+                dateInput.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.type = 'text';
+                    }
+                });
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenuButton.click();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
